@@ -1,4 +1,4 @@
-package truthstick.sample;
+package truthstick.sample.injection;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

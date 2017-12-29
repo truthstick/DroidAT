@@ -1,42 +1,34 @@
 package truthstick.sample.splash;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
+import android.support.v4.app.FragmentManager;
 
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 import truthstick.sample.R;
-import truthstick.sample.configuration.ConfigurationRepository;
 
 public class SplashActivity extends DaggerAppCompatActivity {
-    private Button getStartedButton;
-    private ProgressBar progressBar;
 
-    @Inject ConfigurationRepository configurationRepository;
+    @Inject
+    SplashFragment injectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        getStartedButton = findViewById(R.id.get_started_button);
-        progressBar = findViewById(R.id.progress_bar);
-    }
+        setContentView(R.layout.splash_activity);
 
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        SplashFragment splashFragment = (SplashFragment) supportFragmentManager
+                .findFragmentById(R.id.contentFrame);
 
-        Log.d("Splash", "configRepo: " + configurationRepository);
-
-        getStartedButton.setOnClickListener(view -> {
-            getStartedButton.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
-        });
+        if (splashFragment == null) {
+            splashFragment = injectedFragment;
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.contentFrame, splashFragment)
+                    .commit();
+        }
     }
 }

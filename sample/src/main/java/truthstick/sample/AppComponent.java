@@ -9,12 +9,14 @@ import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import truthstick.sample.configuration.ConfigurationModule;
+import truthstick.sample.monitoring.MonitoringModule;
 
 @Singleton
 @Component(modules = {
         ApplicationModule.class,
         ActivityBindingModule.class,
         ConfigurationModule.class,
+        MonitoringModule.class,
         AndroidSupportInjectionModule.class
 })
 public interface AppComponent extends AndroidInjector<SampleApp> {
