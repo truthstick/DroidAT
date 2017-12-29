@@ -23,7 +23,6 @@ import android.view.View;
 import junit.framework.AssertionFailedError;
 
 import org.hamcrest.Matcher;
-import org.junit.Assert;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,19 +30,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class DroidAT {
     private static final String TAG = "DroidAT";
 
     public static final UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
-    public static <T extends Screen> T instantiateScreen(Class<T> screen) {
+    private static <T extends Screen> T instantiateScreen(Class<T> screen) {
         try {
             return screen.getConstructor().newInstance();
         } catch (Exception e) {
-            Assert.fail("Unable to create screen: " + e.getMessage());
+            throw new AssertionError("Unable to create screen: " + screen.getClass().getName(), e);
         }
-        return null; // NOTE: won't be used since fail throws exception
     }
 
     public static <T extends Screen> T onNewScreen(Class<T> uatScreen) {
@@ -52,12 +52,9 @@ public class DroidAT {
         try {
             screen = instantiateScreen(uatScreen);
             Intents.intended(IntentMatchers.hasComponent(new ComponentName(InstrumentationRegistry.getTargetContext(), screen.getExpectedTopActivity())));
-
-            // Reset intent tracking
-            Intents.release();
-            Intents.init();
+            resetIntentTracking();
         } catch (AssertionFailedError e) {
-            Assert.fail("Activity was not started correctly by intent: " + e.getMessage());
+            fail("Activity was not started correctly by intent: " + e.getMessage());
         }
 
         return screen;
@@ -69,9 +66,7 @@ public class DroidAT {
         sleep(500, TimeUnit.MILLISECONDS);
         T screen = instantiateScreen(uatScreen);
 
-        // Reset intent tracking
-        Intents.release();
-        Intents.init();
+        resetIntentTracking();
 
         if (screen.expectsFragment()) {
             Class targetFragment = screen.getExpectedTopFragment();
@@ -79,10 +74,10 @@ public class DroidAT {
             Class<? extends Fragment> topFragment = findTopFragment((FragmentActivity) getActivityInstance());
 
             if (topFragment == null) {
-                Assert.fail("No fragments available");
+                fail("No fragments available");
             }
 
-            Assert.assertTrue("Expected fragment [" + targetFragment.getSimpleName()
+            assertTrue("Expected fragment [" + targetFragment.getSimpleName()
                             + "] to be on top but was [" + topFragment.getSimpleName() + "]",
                     targetFragment.isAssignableFrom(topFragment));
         }
@@ -105,9 +100,7 @@ public class DroidAT {
     public static <T extends Screen> T pressBackUntilOnScreen(Class<T> uatScreen) {
         T screen = instantiateScreen(uatScreen);
 
-        // Reset intent tracking
-        Intents.release();
-        Intents.init();
+        resetIntentTracking();
 
         String startingPackageName = InstrumentationRegistry.getTargetContext().getPackageName();
 
@@ -119,7 +112,7 @@ public class DroidAT {
             Activity topActivity = getActivityInstance();
 
             if (topActivity == null || !startingPackageName.equals(topActivity.getPackageName())) {
-                Assert.fail("Target activity not found in backstack.");
+                fail("Target activity not found in backstack.");
             } else {
                 if (screen.getExpectedTopActivity().isAssignableFrom(topActivity.getClass())) {
                     if (!screen.expectsFragment()) {
@@ -154,13 +147,10 @@ public class DroidAT {
 
     public static Activity getActivityInstance() {
         final AtomicReference<Activity> activityReference = new AtomicReference<>();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-                if (!resumedActivities.isEmpty()) {
-                    activityReference.set(resumedActivities.iterator().next());
-                }
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
+            Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
+            if (!resumedActivities.isEmpty()) {
+                activityReference.set(resumedActivities.iterator().next());
             }
         });
         return activityReference.get();
@@ -204,7 +194,7 @@ public class DroidAT {
                 try {
                     wait = device.wait(condition, timeout);
                 } catch (NullPointerException npe) {
-                    Assert.fail("NPE generated under API 19, unable to find object, likely an UIAutomator bug.");
+                    fail("NPE generated under API 19, unable to find object, likely an UIAutomator bug.");
                 }
             } else {
                 throw nullPointerExceptionFromUIAutomatorInternals;
@@ -243,5 +233,10 @@ public class DroidAT {
                 uiController.loopMainThreadUntilIdle();
             }
         };
+    }
+
+    private static void resetIntentTracking() {
+        Intents.release();
+        Intents.init();
     }
 }
