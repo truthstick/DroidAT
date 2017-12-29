@@ -23,24 +23,13 @@ android {
 dependencies {
     api "junit:junit:${versions.junit}"
 
-    implementation("com.android.support.test:runner:${versions.supportTestRunner}") {
-        exclude group: 'com.android.support'
-    }
+    implementation "com.android.support.test:runner:${versions.supportTestRunner}"
 
     api "com.android.support.test.uiautomator:uiautomator-v18:${versions.uiAutomator}"
 
-    api("com.android.support.test.espresso:espresso-core:${versions.espresso}", {
-        exclude group: 'com.android.support'
-    })
-    implementation("com.android.support.test.espresso:espresso-contrib:${versions.espresso}") {
-        exclude group: 'com.android.support'
-    }
-    implementation("com.android.support.test.espresso:espresso-intents:${versions.espresso}") {
-        exclude group: 'com.android.support'
-    }
-    implementation("com.android.support.test.espresso:espresso-idling-resource:${versions.espresso}") {
-        exclude group: 'com.android.support'
-    }
+    api "com.android.support.test.espresso:espresso-core:${versions.espresso}"
 
-    implementation "com.android.support:appcompat-v7:${versions.supportLibrary}"
+    implementation "com.android.support.test.espresso:espresso-contrib:${versions.espresso}"
+    implementation "com.android.support.test.espresso:espresso-intents:${versions.espresso}"
+    implementation "com.android.support.test.espresso:espresso-idling-resource:${versions.espresso}"
 }
