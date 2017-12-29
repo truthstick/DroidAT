@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Sample</string>
     <string name="action_settings">Settings</string>
+    <string name="sign_in">Sign In</string>
+    <string name="username">Username</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="testing_like_a_boss">Testing, Like a Boss.</string>
+    <string name="description">Use screens to abstract away test details…</string>
+    <string name="next">Continue</string>
+    <string name="get_started">Get Started</string>
 </resources>
