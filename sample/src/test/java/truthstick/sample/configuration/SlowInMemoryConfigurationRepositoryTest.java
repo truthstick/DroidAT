@@ -27,6 +27,8 @@ public class SlowInMemoryConfigurationRepositoryTest {
 
         workScheduler.advanceTimeBy(3, TimeUnit.SECONDS);
 
-        observer.assertValueCount(1);
+        observer
+                .assertValue(new Configuration())
+                .assertComplete();
     }
 }
