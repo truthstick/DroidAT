@@ -16,6 +16,5 @@ class SlowInMemoryConfigurationRepository implements ConfigurationRepository {
     public Single<Configuration> loadConfiguration() {
         return Single.just(new Configuration())
                 .delay(3, TimeUnit.SECONDS, workScheduler);
-
     }
 }
