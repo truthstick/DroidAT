@@ -1,1 +1,1 @@
-include ':droidAT'
+include ':droidAT', ':sample'

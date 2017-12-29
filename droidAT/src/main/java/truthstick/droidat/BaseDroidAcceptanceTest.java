@@ -12,6 +12,6 @@ public abstract class BaseDroidAcceptanceTest {
     public IntentsTestRule startup = new IntentsTestRule<>(startupActivity());
 
     @NonNull
-    abstract Class<? extends Activity> startupActivity();
+    protected abstract Class<? extends Activity> startupActivity();
 
 }
