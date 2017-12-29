@@ -1,17 +1,23 @@
-package truthstick.sample;
+package truthstick.sample.splash;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import com.zombietank.sample.R;
+import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
+import truthstick.sample.R;
+import truthstick.sample.configuration.ConfigurationRepository;
+
+public class SplashActivity extends DaggerAppCompatActivity {
     private Button getStartedButton;
     private ProgressBar progressBar;
+
+    @Inject ConfigurationRepository configurationRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+
+        Log.d("Splash", "configRepo: " + configurationRepository);
 
         getStartedButton.setOnClickListener(view -> {
             getStartedButton.setVisibility(View.GONE);
