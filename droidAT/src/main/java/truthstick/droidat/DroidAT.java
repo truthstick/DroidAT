@@ -147,10 +147,13 @@ public class DroidAT {
 
     public static Activity getActivityInstance() {
         final AtomicReference<Activity> activityReference = new AtomicReference<>();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
-            Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-            if (!resumedActivities.isEmpty()) {
-                activityReference.set(resumedActivities.iterator().next());
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
+                if (!resumedActivities.isEmpty()) {
+                    activityReference.set(resumedActivities.iterator().next());
+                }
             }
         });
         return activityReference.get();
