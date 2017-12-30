@@ -8,6 +8,7 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
+import truthstick.sample.authentication.AuthenticationModule;
 import truthstick.sample.configuration.ConfigurationModule;
 import truthstick.sample.monitoring.MonitoringModule;
 
@@ -17,6 +18,7 @@ import truthstick.sample.monitoring.MonitoringModule;
         ActivityBindingModule.class,
         ConfigurationModule.class,
         MonitoringModule.class,
+        AuthenticationModule.class,
         AndroidSupportInjectionModule.class
 })
 public interface AppComponent extends AndroidInjector<SampleApp> {

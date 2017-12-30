@@ -3,4 +3,11 @@
     <string name="testing_like_a_boss">Testing, Like a Boss.</string>
     <string name="description">Use screens to abstract away test details…</string>
     <string name="get_started">Get Started</string>
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="sign_in_error">Error Signing In. Check your credentials.</string>
+    <string name="sign_in_success">Great job! You got in.</string>
 </resources>

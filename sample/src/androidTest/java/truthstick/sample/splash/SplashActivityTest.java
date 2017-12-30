@@ -1,4 +1,4 @@
-package truthstick.sample;
+package truthstick.sample.splash;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import org.junit.Test;
 
 import truthstick.droidat.BaseDroidAcceptanceTest;
-import truthstick.sample.splash.SplashActivity;
 
 import static truthstick.droidat.DroidAT.onScreen;
 
@@ -19,9 +18,12 @@ public class SplashActivityTest extends BaseDroidAcceptanceTest  {
     }
 
     @Test
-    public void getStartedLoadsConfiguration() throws Exception {
+    public void afterConfigurationLoadedProceedToSignIn() throws Exception {
         onScreen(SplashScreen.class)
                 .selectGetStarted()
                 .verifyProgressIndicatorShown();
+
+        // TODO: Need to wait for io scheduler to complete to introduce this assertion.
+        // onNewScreen(SignInScreen.class);
     }
 }

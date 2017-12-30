@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
 import truthstick.sample.R;
+import truthstick.sample.authentication.SignInActivity;
 
 public class SplashFragment extends DaggerFragment implements SplashContract.View {
 
@@ -76,6 +77,6 @@ public class SplashFragment extends DaggerFragment implements SplashContract.Vie
 
     @Override
     public void showNextScreen() {
-        showError("Advance to next screen...");
+        SignInActivity.launch(getContext());
     }
 }

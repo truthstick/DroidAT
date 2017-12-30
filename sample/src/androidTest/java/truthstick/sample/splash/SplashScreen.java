@@ -1,7 +1,9 @@
-package truthstick.sample;
+package truthstick.sample.splash;
+
+import android.support.test.espresso.matcher.ViewMatchers;
 
 import truthstick.droidat.Screen;
-import truthstick.sample.splash.SplashActivity;
+import truthstick.sample.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -16,7 +18,7 @@ public class SplashScreen extends Screen {
     }
 
     public SplashScreen selectGetStarted() {
-        onView(withId(R.id.get_started_button)).check(matches(isDisplayed())).perform(click());
+        onView(ViewMatchers.withId(R.id.get_started_button)).check(matches(isDisplayed())).perform(click());
         return this;
     }
 

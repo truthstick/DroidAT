@@ -1,5 +1,7 @@
-package truthstick.sample.splash;
+package truthstick.sample.authentication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
@@ -8,10 +10,9 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import truthstick.sample.R;
 
-public class SplashActivity extends DaggerAppCompatActivity {
-
+public class SignInActivity extends DaggerAppCompatActivity {
     @Inject
-    SplashFragment injectedFragment;
+    SignInFragment injectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +21,7 @@ public class SplashActivity extends DaggerAppCompatActivity {
         setContentView(R.layout.content_activity);
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
-        SplashFragment splashFragment = (SplashFragment) supportFragmentManager
+        SignInFragment splashFragment = (SignInFragment) supportFragmentManager
                 .findFragmentById(R.id.contentFrame);
 
         if (splashFragment == null) {
@@ -31,4 +32,9 @@ public class SplashActivity extends DaggerAppCompatActivity {
                     .commit();
         }
     }
+
+    public static void launch(Context context) {
+        context.startActivity(new Intent(context, SignInActivity.class));
+    }
 }
+

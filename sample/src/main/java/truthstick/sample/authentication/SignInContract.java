@@ -1,23 +1,25 @@
-package truthstick.sample.splash;
+package truthstick.sample.authentication;
 
 import truthstick.sample.mvp.MvpPresenter;
 import truthstick.sample.mvp.MvpView;
 
-public interface SplashContract {
+public interface SignInContract {
 
     interface View extends MvpView {
         void showProgress();
 
         void hideProgress();
 
-        void showError(String message);
+        void signInError();
 
-        void showUpgradePrompt();
-
-        void showNextScreen();
+        void signInSuccess();
     }
 
     interface Presenter extends MvpPresenter<View> {
-        void getStartedPressed();
+        void setEmail(String user);
+
+        void setPassword(String password);
+
+        void signInPressed();
     }
 }

@@ -1,6 +1,6 @@
-package truthstick.sample;
+package truthstick.sample.mvp;
 
-public interface BasePresenter<View> {
+public interface MvpPresenter<View> {
 
     /**
      * Binds presenter with a view when resumed. The Presenter will perform initialization here.
