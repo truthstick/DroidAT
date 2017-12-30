@@ -1,12 +1,12 @@
 package truthstick.sample.splash;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 import truthstick.sample.R;
+import truthstick.sample.view.Fragments;
 
 public class SplashActivity extends DaggerAppCompatActivity {
 
@@ -19,16 +19,6 @@ public class SplashActivity extends DaggerAppCompatActivity {
 
         setContentView(R.layout.content_activity);
 
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        SplashFragment splashFragment = (SplashFragment) supportFragmentManager
-                .findFragmentById(R.id.contentFrame);
-
-        if (splashFragment == null) {
-            splashFragment = injectedFragment;
-            supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.contentFrame, splashFragment)
-                    .commit();
-        }
+        Fragments.addIfAbsent(getSupportFragmentManager(), R.id.contentFrame, injectedFragment);
     }
 }
