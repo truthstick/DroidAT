@@ -14,7 +14,7 @@ android {
             useSupportLibrary = true
         }
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'truthstick.sample.IdlingTestRunner'
     }
 
     buildTypes {
@@ -55,4 +55,5 @@ dependencies {
     testImplementation 'com.google.truth:truth:0.37'
 
     androidTestImplementation project(':droidAT')
+    androidTestImplementation 'com.squareup.rx.idler:rx2-idler:0.9.0'
 }

@@ -15,6 +15,12 @@ class SlowInMemoryConfigurationRepository implements ConfigurationRepository {
     @Override
     public Single<Configuration> loadConfiguration() {
         return Single.just(new Configuration())
-                .delay(3, TimeUnit.SECONDS, workScheduler);
+                .doOnSuccess(configuration -> doSomeLongRunningTask())
+                .subscribeOn(workScheduler);
+    }
+
+    // This is ugly compared to delay(), but RxIdler doesn't detect scheduled non-blocking work.
+    private void doSomeLongRunningTask() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
     }
 }

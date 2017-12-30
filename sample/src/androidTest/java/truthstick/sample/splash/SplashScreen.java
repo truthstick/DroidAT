@@ -1,7 +1,5 @@
 package truthstick.sample.splash;
 
-import android.support.test.espresso.matcher.ViewMatchers;
-
 import truthstick.droidat.Screen;
 import truthstick.sample.R;
 
@@ -18,12 +16,7 @@ public class SplashScreen extends Screen {
     }
 
     public SplashScreen selectGetStarted() {
-        onView(ViewMatchers.withId(R.id.get_started_button)).check(matches(isDisplayed())).perform(click());
-        return this;
-    }
-
-    public SplashScreen verifyProgressIndicatorShown() {
-        onView(withId(R.id.progress_bar)).check(matches(isDisplayed()));
+        onView(withId(R.id.get_started_button)).check(matches(isDisplayed())).perform(click());
         return this;
     }
 }

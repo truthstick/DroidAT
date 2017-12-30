@@ -6,10 +6,12 @@ import android.support.annotation.NonNull;
 import org.junit.Test;
 
 import truthstick.droidat.BaseDroidAcceptanceTest;
+import truthstick.sample.authentication.SignInScreen;
 
+import static truthstick.droidat.DroidAT.onNewScreen;
 import static truthstick.droidat.DroidAT.onScreen;
 
-public class SplashActivityTest extends BaseDroidAcceptanceTest  {
+public class SplashActivityTest extends BaseDroidAcceptanceTest {
 
     @NonNull
     @Override
@@ -20,10 +22,8 @@ public class SplashActivityTest extends BaseDroidAcceptanceTest  {
     @Test
     public void afterConfigurationLoadedProceedToSignIn() throws Exception {
         onScreen(SplashScreen.class)
-                .selectGetStarted()
-                .verifyProgressIndicatorShown();
+                .selectGetStarted();
 
-        // TODO: Need to wait for io scheduler to complete to introduce this assertion.
-        // onNewScreen(SignInScreen.class);
+        onNewScreen(SignInScreen.class);
     }
 }
