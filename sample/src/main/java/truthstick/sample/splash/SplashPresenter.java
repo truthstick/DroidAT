@@ -34,13 +34,15 @@ public class SplashPresenter extends BasePresenter<SplashContract.View> implemen
                 .doOnSubscribe(__ -> view().showProgress())
                 .doAfterTerminate(() -> view().hideProgress())
                 .doOnError(Timber::e)
-                .subscribe(upgradeRequired -> {
-                    if (upgradeRequired) {
-                        view().showUpgradePrompt();
-                    } else {
-                        view().showNextScreen();
-                    }
-                }, throwable -> view().showError(throwable.getMessage()));
+                .subscribe(this::promptForUpgradeOrProceed, error -> view().showError(error.getMessage()));
+    }
+
+    private void promptForUpgradeOrProceed(Boolean upgradeRequired) {
+        if (upgradeRequired) {
+            view().showUpgradePrompt();
+        } else {
+            view().showNextScreen();
+        }
     }
 
     private boolean needsUpgrade(Configuration configuration) {
