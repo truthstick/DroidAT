@@ -51,6 +51,8 @@ jobs:
       environment:
         JVM_OPTS: -Xmx3200m
       steps:
+        - restore_cache:
+            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "sample/build.gradle" }}
         - checkout
         - run:
             name: Setup emulator
@@ -69,7 +71,7 @@ jobs:
               adb shell input keyevent 82
         - run:
             name: Run Tests
-            command: ./gradlew connectedAndroidTest
+            command: ./gradlew connectedAndroidTest -PdisablePreDex
         - store_artifacts:
             path: sample/build/reports
             destination: reports
