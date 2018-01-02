@@ -19,6 +19,7 @@ import truthstick.sample.monitoring.MonitoringModule;
         ConfigurationModule.class,
         MonitoringModule.class,
         AuthenticationModule.class,
+        SchedulersModule.class,
         AndroidSupportInjectionModule.class
 })
 public interface AppComponent extends AndroidInjector<SampleApp> {
